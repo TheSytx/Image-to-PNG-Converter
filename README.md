@@ -12,6 +12,12 @@ A simple Firefox extension that allows users to download any image (JPG, WebP, P
 
 ## Installation
 
+### From Firefox Add-ons Store
+
+You can install this extension directly from the official Firefox Add-ons Store:
+
+➡️ [Download from Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/image-to-png-converter/)
+
 ### From Source
 
 1. Clone this repository or download it as a ZIP
@@ -24,12 +30,14 @@ A simple Firefox extension that allows users to download any image (JPG, WebP, P
 
 ```
 image-to-png-converter/
-├── manifest.json
-├── background.js
 ├── icons/
 │   ├── icon-48.png
 │   └── icon-96.png
+├── images/
+│   └── preview.png
+├── background.js
 ├── LICENSE
+├── manifest.json
 └── README.md
 ```
 
@@ -38,6 +46,10 @@ image-to-png-converter/
 1. Right-click on any image on a webpage
 2. Select "Download as PNG" from the context menu
 3. Choose where to save the converted PNG file
+
+## Preview
+
+![Extension Preview](images/preview.png)
 
 ## License
 
