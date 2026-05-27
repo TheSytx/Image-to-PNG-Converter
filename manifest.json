@@ -1,10 +1,21 @@
 {
   "manifest_version": 2,
   "name": "Image to PNG Converter",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Convert and download any image (JPG, WebP, etc.) as PNG with right-click",
   "author": "TheSytx",
   "homepage_url": "https://github.com/TheSytx/image-to-png-converter",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{e3da0933-97de-427a-a0ff-9788d83222e2}",
+      "data_collection_permissions": {
+        "required": [
+          "none"
+        ],
+        "optional": []
+      }
+    }
+  },
   "permissions": [
     "contextMenus",
     "downloads",
