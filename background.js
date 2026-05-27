@@ -1,7 +1,7 @@
 /**
  * Image to PNG Converter
  * A Firefox extension to convert any image format to PNG when right-clicking
- * 
+ *
  * Author: TheSytx
  */
 
@@ -21,43 +21,54 @@ browser.contextMenus.onClicked.addListener((info, tab) => {
 
 // Function to convert any image to PNG and download
 function convertAndDownload(imageUrl) {
-  // Fetch the image
   fetch(imageUrl)
     .then(response => response.blob())
     .then(blob => {
-      // Create image and canvas elements
       const img = new Image();
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
-      
-      img.onload = function() {
+
+      // Store the blob URL so we can revoke it after the image loads
+      const blobUrl = URL.createObjectURL(blob);
+
+      img.onload = function () {
         // Set canvas dimensions to match the image
         canvas.width = img.width;
         canvas.height = img.height;
-        
+
         // Draw the image on the canvas
         ctx.drawImage(img, 0, 0);
-        
+
+        // The blob URL is no longer needed once the image has loaded
+        URL.revokeObjectURL(blobUrl);
+
         // Convert canvas content to PNG blob
-        canvas.toBlob(function(pngBlob) {
-          // Create a URL for the blob
+        canvas.toBlob(function (pngBlob) {
           const url = URL.createObjectURL(pngBlob);
-          
+
           // Get the original filename and change extension to .png
           let filename = imageUrl.split('/').pop().split('?')[0];
           filename = filename.replace(/\.[^/.]+$/, '') + '.png';
-          
+
           // Trigger the download and prompt for save location
           browser.downloads.download({
             url: url,
             filename: filename,
-            saveAs: true // Ask user where to save
+            saveAs: true
+          }).then(() => {
+            // The download has started, the PNG blob URL is no longer needed
+            URL.revokeObjectURL(url);
           });
         }, 'image/png');
       };
-      
-      // Load the blob into the image element
-      img.src = URL.createObjectURL(blob);
+
+      img.onerror = function () {
+        // Clean up if the image fails to load
+        URL.revokeObjectURL(blobUrl);
+        console.error("Failed to load image:", imageUrl);
+      };
+
+      img.src = blobUrl;
     })
     .catch(error => {
       console.error("Conversion error:", error);

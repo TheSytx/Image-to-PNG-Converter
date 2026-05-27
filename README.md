@@ -47,6 +47,16 @@ image-to-png-converter/
 2. Select "Download as PNG" from the context menu
 3. Choose where to save the converted PNG file
 
+## Permissions
+ 
+This extension requires the following permissions:
+ 
+| Permission | Reason |
+|---|---|
+| `contextMenus` | To add the "Download as PNG" option to the right-click menu |
+| `downloads` | To save the converted PNG file to your device |
+| `<all_urls>` | To fetch images from any website for conversion — no data is collected or transmitted |
+
 ## Preview
 
 ![Extension Preview](images/preview.png)
