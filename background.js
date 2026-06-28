@@ -55,9 +55,16 @@ function convertAndDownload(imageUrl) {
             url: url,
             filename: filename,
             saveAs: true
-          }).then(() => {
-            // The download has started, the PNG blob URL is no longer needed
-            URL.revokeObjectURL(url);
+          }).then((downloadId) => {
+            // Wait for the download to finish before revoking the blob URL
+            browser.downloads.onChanged.addListener(function cleanup(delta) {
+              if (delta.id === downloadId && delta.state) {
+                if (delta.state.current === "complete" || delta.state.current === "interrupted") {
+                  URL.revokeObjectURL(url);
+                  browser.downloads.onChanged.removeListener(cleanup);
+                }
+              }
+            });
           });
         }, 'image/png');
       };

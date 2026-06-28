@@ -1,5 +1,8 @@
 ## Changelog
  
+### [1.0.3]
+- Fixed downloads failing silently due to blob URL being revoked before Firefox could read it
+
 ## [1.0.2]
 - Add gecko add-on ID to manifest
 - Add data_collection_permissions declaration to manifest
